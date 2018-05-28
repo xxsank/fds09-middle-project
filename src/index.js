@@ -8,11 +8,13 @@ const mainHeaderEl = document.querySelector('.main-header');
 const loginBtnEl = document.querySelector('.main-header__login-btn');
 const logoutBtnEl = document.querySelector('.main-header__logout-btn');
 const signupBtnEl = document.querySelector('.main-header__signup-btn');
+const topBtnEl = document.querySelector('.top-list__btn');
 
 const templates = {
   login: document.querySelector('#login').content,
   signup: document.querySelector('#signup').content,
-  indexImg: document.querySelector('#index-page__img').content
+  indexImg: document.querySelector('#index-page__img').content,
+  productList: document.querySelector('#product-list').content
 }
 
 //로그인 함수
@@ -48,8 +50,13 @@ function indexPage(){
   })
   
   signupBtnEl.addEventListener('click',e=>{
-    signUpPage()
-  })  
+    signUpPage();
+  })
+  
+  topBtnEl.addEventListener('click', e=> {
+    indexPage();
+    topProductPage();
+  })
   render(fragment);
 }
 
@@ -91,5 +98,19 @@ async function signUpPage(){
   render(fragment);
 }
 
-//상품리스트 페이지
+// top 상품리스트 페이지
+async function topProductPage(){
+  // rootEl.classList.add('root--loading');
+  const res = await postAPI.get(`/topProducts`);
+  // rootEl.classList.remove('root--loading');
+  for(let i=0; i<res.data.length;i++){
+    const fragment = document.importNode(templates.productList, true);
+    fragment.querySelector('.product-name').textContent = res.data[i].productName;
+    fragment.querySelector('.product-price').textContent = res.data[i].price;
+    const imageEl = fragment.querySelector('.thumbnail-img')
+    imageEl.setAttribute('src', res.data[i].img);
+    rootEl.appendChild(fragment);
+  }
+}
+
 
