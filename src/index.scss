@@ -3,3 +3,39 @@ $main-color: skyblue;
 body {
   background-color: $main-color;
 }
+
+header{
+  background-color: green;
+  width: 100%;
+}
+
+.main-header{
+  &__login-btn{
+    .login--authed & {
+      display: none;
+    }
+  }
+  &__logout-btn{
+    display: none;
+    .login--authed & {
+      display: inline-block;
+    }
+  }
+}
+
+.container{
+  overflow: hidden;
+}
+
+.side-bar{
+  background-color: yellow;
+  float:left;
+  width: 10%;
+}
+
+.root{
+  background-color: red;
+  float:left;
+  width: 90%;
+  padding-left: 50px;  
+}
