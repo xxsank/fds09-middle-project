@@ -1,12 +1,38 @@
-$main-color: skyblue;
+$main-color: white;
 
 body {
   background-color: $main-color;
 }
 
 header{
-  background-color: green;
+  background: rgba(255,255,255,0.7);
   width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  height: 80px;
+}
+
+footer{
+  background-color: rosybrown;
+  width: 100%;
+  height: 80px;
+}
+
+.middle-head{
+  position: fixed;
+  left: 50%;
+  margin-left: -120px;
+  margin-top: -10px;
+  font-size: 3rem;
+}
+
+.right-head{
+  float: right;
 }
 
 .main-header{
@@ -24,18 +50,26 @@ header{
 }
 
 .container{
+  background-color: black;
   overflow: hidden;
+  width: 100%;
+  height: 1000px;
+  margin-top: 85px;
 }
 
-.side-bar{
-  background-color: yellow;
+.menu{
+  background-color: white;
   float:left;
   width: 10%;
+  height: 1000px;
 }
 
 .root{
   background-color: red;
   float:left;
   width: 90%;
-  padding-left: 50px;  
+  height: 1000px;
 }
+
+
+
