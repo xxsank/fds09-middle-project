@@ -1,15 +1,17 @@
 $main-color: white;
 
-html{
-  background-image: url("https://cdn.glitch.com/88c9df30-262d-4457-acb7-349a73ae1b9f%2FindexImg.jpg?1527519517712");
-  background-attachment: fixed;
-  background-size: cover;
-}
 body {
-  position: absolute;
-  height: 100%;
   width: 100%;
-  // height: 100%;
+  position: absolute;
+}
+
+.background-img{
+  background: url("https://cdn.glitch.com/88c9df30-262d-4457-acb7-349a73ae1b9f%2FindexImg.jpg?1527519517712") no-repeat fixed;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  
 }
 
 header{
@@ -60,26 +62,33 @@ header{
 }
 
 .container{
-  overflow: hidden;
   width: 100%;
+  height: 100vh;
   margin-top: 85px;
 }
+
 
 .menu{
   // background-color: white;
   position: fixed;
-  float:left;
-  width: 10%;
+  float: left;
+  width: 10%;  
   &-label, &-list a{
     color:white;
   }
 }
 
 .root{
-  float:left;
+  float: left;
   width: 90%;
-  height: 100%;
+  // height: 100%;
   margin-left: 130px;
+}
+
+.container ::after{
+  content: '';
+  display: table;
+  clear: both;
 }
 
 .product-list__thumbnail{
