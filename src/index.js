@@ -9,6 +9,11 @@ const loginBtnEl = document.querySelector('.main-header__login-btn');
 const logoutBtnEl = document.querySelector('.main-header__logout-btn');
 const signupBtnEl = document.querySelector('.main-header__signup-btn');
 const topBtnEl = document.querySelector('.top-list__btn');
+const bottomBtnEl = document.querySelector('.bottom-list__btn');
+const shoesBtnEl = document.querySelector('.shoes-list__btn');
+
+const bgReverseEl = document.querySelector('.background-img');
+const menuReverseEl = document.querySelector('.menu');
 
 const templates = {
   login: document.querySelector('#login').content,
@@ -40,27 +45,37 @@ function render(fragment){
 // 항상 보여지는 첫화면
 function indexPage(){
   const fragment = document.importNode(templates.indexImg, true);
-  loginBtnEl.addEventListener('click',e=>{
+  
+  loginBtnEl.addEventListener('click', e=> {
     loginPage()
   })
   
-  logoutBtnEl.addEventListener('click',e=>{
+  logoutBtnEl.addEventListener('click', e=> {
     logout();
     indexPage();
   })
   
-  signupBtnEl.addEventListener('click',e=>{
+  signupBtnEl.addEventListener('click', e=> {
     signUpPage();
   })
   
   topBtnEl.addEventListener('click', e=> {
-    indexPage();
+    render(fragment);
     topProductPage();
   })
+
+  bottomBtnEl.addEventListener('click', e=> {
+    render(fragment);
+    bottomProductPage();
+  })
+
+  shoesBtnEl.addEventListener('click', e=> {
+    render(fragment);
+    shoesProductPage();
+  })
+
   render(fragment);
 }
-
-indexPage();
 
 //로그인 페이지
 async function loginPage(){
@@ -100,6 +115,10 @@ async function signUpPage(){
 
 // top 상품리스트 페이지
 async function topProductPage(){
+  bgReverseEl.classList.add('reverse');
+  menuReverseEl.classList.add('reverse');
+  const clearFragment = document.importNode(templates.indexImg, true);
+  render(clearFragment);
   // rootEl.classList.add('root--loading');
   const res = await postAPI.get(`/topProducts`);
   // rootEl.classList.remove('root--loading');
@@ -113,4 +132,43 @@ async function topProductPage(){
   }
 }
 
+// bottom 상품리스트 페이지
+async function bottomProductPage(){
+  bgReverseEl.classList.add('reverse');
+  menuReverseEl.classList.add('reverse');    
+  const clearFragment = document.importNode(templates.indexImg, true);
+  render(clearFragment);
+  // rootEl.classList.add('root--loading');
+  const res = await postAPI.get(`/bottomProducts`);
+  // rootEl.classList.remove('root--loading');
+  for(let i=0; i<res.data.length;i++){
+    const fragment = document.importNode(templates.productList, true);
+    fragment.querySelector('.product-name').textContent = res.data[i].productName;
+    fragment.querySelector('.product-price').textContent = res.data[i].price;
+    const imageEl = fragment.querySelector('.thumbnail-img')
+    imageEl.setAttribute('src', res.data[i].img);
+    rootEl.appendChild(fragment);
+  }
+}
 
+// shoes 상품리스트 페이지
+async function shoesProductPage(){
+  bgReverseEl.classList.add('reverse');
+  menuReverseEl.classList.add('reverse');    
+  const clearFragment = document.importNode(templates.indexImg, true);
+  render(clearFragment);
+  // rootEl.classList.add('root--loading');
+  const res = await postAPI.get(`/shoesProducts`);
+  // rootEl.classList.remove('root--loading');
+  for(let i=0; i<res.data.length;i++){
+    const fragment = document.importNode(templates.productList, true);
+    fragment.querySelector('.product-name').textContent = res.data[i].productName;
+    fragment.querySelector('.product-price').textContent = res.data[i].price;
+    const imageEl = fragment.querySelector('.thumbnail-img')
+    imageEl.setAttribute('src', res.data[i].img);
+    rootEl.appendChild(fragment);
+  }
+}
+
+//indexPage start
+indexPage();
