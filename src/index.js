@@ -146,10 +146,14 @@ async function topProductPage(){
   for(let i=0; i<res.data.length;i++){
     const fragment = document.importNode(templates.productList, true);
     fragment.querySelector('.product-name').textContent = res.data[i].productName;
-    fragment.querySelector('.product-price').textContent = res.data[i].price;
+    fragment.querySelector('.product-price').textContent = res.data[i].price + ' won';
     const imageEl = fragment.querySelector('.thumbnail-img')
     imageEl.setAttribute('src', res.data[i].img);
     rootEl.appendChild(fragment);
+
+    imageEl.addEventListener('click', e=> {
+      productItemPage('topProducts',res.data[i].id);
+    })
   }
 }
 
@@ -165,10 +169,14 @@ async function bottomProductPage(){
   for(let i=0; i<res.data.length;i++){
     const fragment = document.importNode(templates.productList, true);
     fragment.querySelector('.product-name').textContent = res.data[i].productName;
-    fragment.querySelector('.product-price').textContent = res.data[i].price;
+    fragment.querySelector('.product-price').textContent = res.data[i].price + ' won';
     const imageEl = fragment.querySelector('.thumbnail-img')
     imageEl.setAttribute('src', res.data[i].img);
     rootEl.appendChild(fragment);
+
+    imageEl.addEventListener('click', e=> {
+      productItemPage('bottomProducts',res.data[i].id);
+    })
   }
 }
 
@@ -190,19 +198,25 @@ async function shoesProductPage(){
     rootEl.appendChild(fragment);
 
     imageEl.addEventListener('click', e=> {
-      productItemPage(res.data[i].id)
+      productItemPage('shoesProducts',res.data[i].id);
     })
   }
 }
 
- async function productItemPage(productId){
-   const res = await postAPI.get(`/shoesProducts/${productId}`)
+ async function productItemPage(productTag,productId){
+   const res = await postAPI.get(`/${productTag}/${productId}`)
    const fragment = document.importNode(templates.productItem, true);
    const itemImgEl = fragment.querySelector('.product-item__img');
    itemImgEl.setAttribute('src', res.data.img);
    fragment.querySelector('.product-item__name').textContent = res.data.productName;
    fragment.querySelector('.product-item__price').textContent = res.data.price + ' won';
    fragment.querySelector('.product-item__detail').textContent = res.data.productDetail;
+   fragment.querySelector('.list-item1').textContent = res.data.productInfo1;
+   fragment.querySelector('.list-item2').textContent = res.data.productInfo2;
+   fragment.querySelector('.list-item3').textContent = res.data.productInfo3;
+   fragment.querySelector('.list-item4').textContent = res.data.productInfo4;
+   fragment.querySelector('.list-item5').textContent = res.data.productInfo5;
+   
    render(fragment);
  } 
 
