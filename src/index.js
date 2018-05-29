@@ -5,23 +5,24 @@ const postAPI = axios.create({
 });
 const rootEl = document.querySelector('.root');
 const mainHeaderEl = document.querySelector('.main-header');
+
 const loginBtnEl = document.querySelector('.main-header__login-btn');
 const logoutBtnEl = document.querySelector('.main-header__logout-btn');
 const signupBtnEl = document.querySelector('.main-header__signup-btn');
 const topBtnEl = document.querySelector('.top-list__btn');
 const bottomBtnEl = document.querySelector('.bottom-list__btn');
 const shoesBtnEl = document.querySelector('.shoes-list__btn');
+const mainBtnel = document.querySelector('.middle-head');
 
 const bgReverseEl = document.querySelector('.background-img');
 const menuReverseEl = document.querySelector('.menu');
-
-const mainBtnel = document.querySelector('.middle-head');
 
 const templates = {
   login: document.querySelector('#login').content,
   signup: document.querySelector('#signup').content,
   indexImg: document.querySelector('#index-page__img').content,
-  productList: document.querySelector('#product-list').content
+  productList: document.querySelector('#product-list').content,
+  productItem: document.querySelector('#product-item').content
 }
 
 //로그인 함수
@@ -45,7 +46,7 @@ function render(fragment){
 }
 
 // 항상 보여지는 첫화면
-function indexPage(){
+async function indexPage(){
   const fragment = document.importNode(templates.indexImg, true);
 
   mainBtnel.addEventListener('click', e => {
@@ -67,6 +68,8 @@ function indexPage(){
   })
   
   signupBtnEl.addEventListener('click', e=> {
+    bgReverseEl.classList.add('reverse');
+    menuReverseEl.classList.add('reverse');
     render(fragment);
     signUpPage();
   })
@@ -123,7 +126,10 @@ async function signUpPage(){
     e.preventDefault();
     const res = await postAPI.post('/users/register',payload);
     alert('회원가입이 완료 되었습니다.');
-    indexPage();
+    bgReverseEl.classList.remove('reverse');
+    menuReverseEl.classList.remove('reverse');
+    const clearFragment = document.importNode(templates.indexImg, true);
+    render(clearFragment);
   })
   render(fragment);
 }
@@ -178,12 +184,30 @@ async function shoesProductPage(){
   for(let i=0; i<res.data.length;i++){
     const fragment = document.importNode(templates.productList, true);
     fragment.querySelector('.product-name').textContent = res.data[i].productName;
-    fragment.querySelector('.product-price').textContent = res.data[i].price;
-    const imageEl = fragment.querySelector('.thumbnail-img')
+    fragment.querySelector('.product-price').textContent = res.data[i].price + ' won';
+    const imageEl = fragment.querySelector('.thumbnail-img');
     imageEl.setAttribute('src', res.data[i].img);
     rootEl.appendChild(fragment);
+
+    imageEl.addEventListener('click', e=> {
+      productItemPage(res.data[i].id)
+    })
   }
 }
+
+ async function productItemPage(productId){
+   const res = await postAPI.get(`/shoesProducts/${productId}`)
+   const fragment = document.importNode(templates.productItem, true);
+   const itemImgEl = fragment.querySelector('.product-item__img');
+   itemImgEl.setAttribute('src', res.data.img);
+   fragment.querySelector('.product-item__name').textContent = res.data.productName;
+   fragment.querySelector('.product-item__price').textContent = res.data.price + ' won';
+   fragment.querySelector('.product-item__detail').textContent = res.data.productDetail;
+   render(fragment);
+ } 
+
+
+
 
 //indexPage start
 indexPage();
