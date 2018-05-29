@@ -15,6 +15,8 @@ const shoesBtnEl = document.querySelector('.shoes-list__btn');
 const bgReverseEl = document.querySelector('.background-img');
 const menuReverseEl = document.querySelector('.menu');
 
+const mainBtnel = document.querySelector('.middle-head');
+
 const templates = {
   login: document.querySelector('#login').content,
   signup: document.querySelector('#signup').content,
@@ -45,17 +47,27 @@ function render(fragment){
 // 항상 보여지는 첫화면
 function indexPage(){
   const fragment = document.importNode(templates.indexImg, true);
+
+  mainBtnel.addEventListener('click', e => {
+    bgReverseEl.classList.remove('reverse');
+    menuReverseEl.classList.remove('reverse');
+    render(fragment);
+  })
   
   loginBtnEl.addEventListener('click', e=> {
+    bgReverseEl.classList.add('reverse');
+    menuReverseEl.classList.add('reverse'); 
+    render(fragment);
     loginPage()
   })
   
   logoutBtnEl.addEventListener('click', e=> {
+    render(fragment);
     logout();
-    indexPage();
   })
   
   signupBtnEl.addEventListener('click', e=> {
+    render(fragment);
     signUpPage();
   })
   
@@ -91,7 +103,10 @@ async function loginPage(){
     const res = await postAPI.post('/users/login',payload);
     // rootEl.classList.remove('root--loading');
     login(res.data.token);  
-    indexPage();
+    bgReverseEl.classList.remove('reverse');
+    menuReverseEl.classList.remove('reverse');
+    const clearFragment = document.importNode(templates.indexImg, true);
+    render(clearFragment);
   })
   render(fragment);
 }
