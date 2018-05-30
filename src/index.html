@@ -44,7 +44,7 @@
       <a href="#"><button class="main-header__login-btn button is-text button is-small">LOGIN</button></a>
       <a href="#"><button class="main-header__logout-btn button is-text button is-small">LOGOUT</button></a>  
       <a href="#"><button class="main-header__signup-btn button is-text button is-small">SIGN UP</button></a>
-      <a href="#"><button class="main-header__mypage-btn button is-text button is-small">MY PAGE</button></a>       
+      <a href="#"><button class="main-header__cart-btn button is-text button is-small">MY CART</button></a>       
       <a href="#"><button class="main-header__order-btn button is-text button is-small">ORDER</button></a>
     </div>
   </div>
@@ -118,7 +118,7 @@
   <div class="box product-item__box">
     <div class="columns">
       <div class="column">
-        <img src="https://cdn.glitch.com/88c9df30-262d-4457-acb7-349a73ae1b9f%2Fbottom1.jpg?1527562256823" class="product-item__img">
+        <img class="product-item__img">
       </div>
       <div class="is-divider-vertical" data-content="OR"></div>
       <div class="column">
@@ -146,10 +146,54 @@
           </div>                   
         </article>
         <button type="submit" class="button is-dark">BUY IT NOW</button>
-        <button type="submit" class="button is-dark">ADD TO CART</button>                            
+        <button type="submit" class="button is-dark product-item__cart-btn">ADD TO CART</button>                            
       </div>
     </div>
   </div>
+</template>
+
+<!-- 장바구니 템플릿 -->
+<template id="product-cart">
+  <div class="box order-box">
+    <h1 class="title is-1">CART</h1>
+    <table class="table">
+      <thead class="table-head">
+        <tr>
+          <th class="th--img">이미지</th>
+          <th></th>
+          <th class="th--info">상품 정보</th>
+          <th class="th--price">판매가</th>
+          <th class="th--quantity">수량</th>
+          <th class="th--total">합계</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th><button class="button">DELETE</button></th>          
+          <th><button class="button">CONTINUE</button></th>
+          <th><button class="button">ORDER</button></th>
+        </tr>
+      </tfoot>
+      <tbody class="tbody-cart">
+
+      </tbody>
+    </table>
+  </div>  
+</template>
+
+<!-- 장바구니 바디 템플릿 -->
+<template id="cart-body">
+  <tr class="tbody-cart__info">
+   <td class="td--image"><img class="cart-body-img is-24x24"></td>
+   <td class="td--checkbox"><input type="checkbox"></td>          
+   <td class="td--info"></td>
+   <td class="td--price"></td>
+   <td class="td--quantity"></td>
+   <td class="td--total"></td>
+  </tr>
 </template>
 
 <!-- 하단부 -->

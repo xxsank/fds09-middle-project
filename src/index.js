@@ -10,6 +10,7 @@ const mainHeaderEl = document.querySelector('.main-header');
 const loginBtnEl = document.querySelector('.main-header__login-btn');
 const logoutBtnEl = document.querySelector('.main-header__logout-btn');
 const signupBtnEl = document.querySelector('.main-header__signup-btn');
+const cartBtnEl = document.querySelector('.main-header__cart-btn');
 const topBtnEl = document.querySelector('.top-list__btn');
 const bottomBtnEl = document.querySelector('.bottom-list__btn');
 const shoesBtnEl = document.querySelector('.shoes-list__btn');
@@ -23,7 +24,9 @@ const templates = {
   signup: document.querySelector('#signup').content,
   indexImg: document.querySelector('#index-page__img').content,
   productList: document.querySelector('#product-list').content,
-  productItem: document.querySelector('#product-item').content
+  productItem: document.querySelector('#product-item').content,
+  cartList: document.querySelector('#product-cart').content,
+  cartBody: document.querySelector('#cart-body').content
 }
 
 //로그인 함수
@@ -73,6 +76,13 @@ async function indexPage(){
     menuReverseEl.classList.add('reverse');
     render(fragment);
     signUpPage();
+  })
+
+  cartBtnEl.addEventListener('click', e=> {
+    bgReverseEl.classList.add('reverse');
+    menuReverseEl.classList.add('reverse');
+    render(fragment);
+    cartPage();
   })
   
   topBtnEl.addEventListener('click', e=> {
@@ -218,10 +228,43 @@ async function shoesProductPage(){
    fragment.querySelector('.list-item3').textContent = res.data.productInfo3;
    fragment.querySelector('.list-item4').textContent = res.data.productInfo4;
    fragment.querySelector('.list-item5').textContent = res.data.productInfo5;
+
+   const itemCartBtnEl = fragment.querySelector('.product-item__cart-btn');
+
    
    render(fragment);
+     itemCartBtnEl.addEventListener('click', async e=>{
+      e.preventDefault();
+      const payload = {
+        img: res.data.img,
+        productName: res.data.productName,
+        price: res.data.price
+      }
+      const cartRes = await postAPI.post(`/cart`, payload);
+      alert('장바구니에 담겼습니다');
+     })
  } 
 
+ //장바구니 페이지 완성
+ async function cartPage(){
+   const fragment = document.importNode(templates.cartList, true);
+   const parentCartBodyEl = fragment.querySelector('.tbody-cart');
+
+   const res = await postAPI.get('/cart')
+   for(let i = 0; i<res.data.length; i++){
+     const bodyCartFragment = document.importNode(templates.cartBody, true);
+     const imageEl = bodyCartFragment.querySelector('.cart-body-img');
+     imageEl.setAttribute('src', res.data[i].img);
+     bodyCartFragment.querySelector('.td--info').textContent = res.data[i].productName;
+     bodyCartFragment.querySelector('.td--price').textContent = res.data[i].price.toLocaleString() + ' won';
+     bodyCartFragment.querySelector('.td--quantity').textContent = 1;
+     bodyCartFragment.querySelector('.td--total').textContent = res.data[i].price.toLocaleString() + ' won';
+
+     parentCartBodyEl.appendChild(bodyCartFragment);
+   }
+   
+   render(fragment);
+ }
 
 
 
