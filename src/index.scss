@@ -76,7 +76,6 @@ header{
 .menu{
   position: fixed;
   float: left;
-  width: 10%;  
   margin-left: 80px;
   &-label, &-list a{
     color:white;
@@ -89,7 +88,7 @@ header{
 //content 영역 렌더링 부분
 .root{
   float: left;
-  width: 90%;
+  width: 100%;
   margin-left: 200px;
 }
 
@@ -141,8 +140,8 @@ header{
   // border: solid 1px;
   width: 300px;
   position:absolute;
-  top: 200%;
-  left:36.5%;
+  top: 250px;
+  left: 40.3%;
   
   .control{
     margin-top: 10px;
