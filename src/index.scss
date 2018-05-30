@@ -15,18 +15,33 @@ body {
 }
 
 
-header{
+// header{
+//   background: rgba(255,255,255,0.7);
+//   width: 100%;
+//   text-align: center;
+//   padding: 10px 0;
+//   position: fixed;
+//   // overflow: hidden;
+//   // top: 0;
+//   // left: 0;
+//   // z-index: 100;
+//   height: 80px;
+// }
+
+.head-inner{
   background: rgba(255,255,255,0.7);
   width: 100%;
   text-align: center;
   padding: 10px 0;
-  overflow: hidden;
   position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
+  // overflow: hidden;
+  // top: 0;
+  // left: 0;
+  // z-index: 100;
   height: 80px;
+  visibility: hidden;
 }
+
 
 
 // 헤더 쇼핑몰 이름 xxsank 부분
@@ -36,33 +51,25 @@ header{
   margin-left: -120px;
   margin-top: -10px;
   font-size: 3rem;
+  a{
+    color: inherit;
+  }
 }
 
-// 오른쪽 헤더 메뉴 바
-.right-head{
-  float: right;
-}
-
-// 메인 헤더 로그인했을시 버튼 숨기기 
-.main-header{
+// 메뉴 버튼 로그인했을시 버튼 숨기기 
+.menu{
   &__login-btn, &__signup-btn{
     .login--authed & {
       display: none;
     }
   }
-
   &__logout-btn{
     display: none;
     .login--authed & {
       display: inline-block;
     }
   }
-
-  a{
-    color: inherit;
-  }
 }
-
 
 
 // 메뉴,루트 잡는 컨테이너
@@ -119,16 +126,20 @@ header{
 
 //화면 반전
 .reverse{
-  color: black;
-  height: 0;
+  // color: black;
+  // height: 0;
 
-  .container{
+  .head-inner {
+    visibility: visible;
+  }
+  
+  .container  {
     display: none;
   }
 
-  .background-img{
-    height: 0;
-  }
+  // .background-img{
+  //   height: 0;
+  // }
 
   .menu-label, .menu-list a{
     color:black;
@@ -178,6 +189,7 @@ header{
 
 }
 
+// 장바구니 디자인
 .td{
   &--info, &--price, &--quantity, &--total,&--checkbox{
     line-height: 140px;
@@ -185,10 +197,12 @@ header{
   }
 }
 
+// 장바구니 디자인
 .order-box{
   width: 1000px;
 }
 
+// 장바구니 디자인
 .cart-body-img{
   margin-top: 10px;
 }

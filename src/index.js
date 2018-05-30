@@ -5,19 +5,21 @@ const postAPI = axios.create({
   baseURL: process.env.API_URL
 });
 const rootEl = document.querySelector('.root');
-const mainHeaderEl = document.querySelector('.main-header');
+const mainHeaderEl = document.querySelector('.menu-root__container');
 
-const loginBtnEl = document.querySelector('.main-header__login-btn');
-const logoutBtnEl = document.querySelector('.main-header__logout-btn');
-const signupBtnEl = document.querySelector('.main-header__signup-btn');
-const cartBtnEl = document.querySelector('.main-header__cart-btn');
+const mainBtnel = document.querySelector('.middle-head');
+const loginBtnEl = document.querySelector('.menu__login-btn');
+const logoutBtnEl = document.querySelector('.menu__logout-btn');
+const signupBtnEl = document.querySelector('.menu__signup-btn');
+const cartBtnEl = document.querySelector('.menu__cart-btn');
+
 const topBtnEl = document.querySelector('.top-list__btn');
 const bottomBtnEl = document.querySelector('.bottom-list__btn');
 const shoesBtnEl = document.querySelector('.shoes-list__btn');
-const mainBtnel = document.querySelector('.middle-head');
 
 const bgReverseEl = document.querySelector('.background-img');
 const menuReverseEl = document.querySelector('.menu');
+const headerReverseEl = document.querySelector('.main-header');
 
 const templates = {
   login: document.querySelector('#login').content,
@@ -56,12 +58,14 @@ async function indexPage(){
   mainBtnel.addEventListener('click', e => {
     bgReverseEl.classList.remove('reverse');
     menuReverseEl.classList.remove('reverse');
+    headerReverseEl.classList.remove('reverse');
     render(fragment);
   })
   
   loginBtnEl.addEventListener('click', e=> {
     bgReverseEl.classList.add('reverse');
-    menuReverseEl.classList.add('reverse'); 
+    menuReverseEl.classList.add('reverse');
+    headerReverseEl.classList.add('reverse'); 
     render(fragment);
     loginPage()
   })
@@ -74,6 +78,7 @@ async function indexPage(){
   signupBtnEl.addEventListener('click', e=> {
     bgReverseEl.classList.add('reverse');
     menuReverseEl.classList.add('reverse');
+    headerReverseEl.classList.add('reverse');     
     render(fragment);
     signUpPage();
   })
@@ -81,6 +86,7 @@ async function indexPage(){
   cartBtnEl.addEventListener('click', e=> {
     bgReverseEl.classList.add('reverse');
     menuReverseEl.classList.add('reverse');
+    headerReverseEl.classList.add('reverse');     
     render(fragment);
     cartPage();
   })
@@ -119,6 +125,7 @@ async function loginPage(){
     login(res.data.token);  
     bgReverseEl.classList.remove('reverse');
     menuReverseEl.classList.remove('reverse');
+    headerReverseEl.classList.remove('reverse');        
     const clearFragment = document.importNode(templates.indexImg, true);
     render(clearFragment);
   })
@@ -139,6 +146,7 @@ async function signUpPage(){
     alert('회원가입이 완료 되었습니다.');
     bgReverseEl.classList.remove('reverse');
     menuReverseEl.classList.remove('reverse');
+    headerReverseEl.classList.remove('reverse');        
     const clearFragment = document.importNode(templates.indexImg, true);
     render(clearFragment);
   })
@@ -149,6 +157,7 @@ async function signUpPage(){
 async function topProductPage(){
   bgReverseEl.classList.add('reverse');
   menuReverseEl.classList.add('reverse');
+  headerReverseEl.classList.add('reverse');          
   const clearFragment = document.importNode(templates.indexImg, true);
   render(clearFragment);
   // rootEl.classList.add('root--loading');
@@ -171,7 +180,8 @@ async function topProductPage(){
 // bottom 상품리스트 페이지
 async function bottomProductPage(){
   bgReverseEl.classList.add('reverse');
-  menuReverseEl.classList.add('reverse');    
+  menuReverseEl.classList.add('reverse');
+  headerReverseEl.classList.add('reverse');    
   const clearFragment = document.importNode(templates.indexImg, true);
   render(clearFragment);
   // rootEl.classList.add('root--loading');
@@ -194,7 +204,8 @@ async function bottomProductPage(){
 // shoes 상품리스트 페이지
 async function shoesProductPage(){
   bgReverseEl.classList.add('reverse');
-  menuReverseEl.classList.add('reverse');    
+  menuReverseEl.classList.add('reverse');
+  headerReverseEl.classList.add('reverse');    
   const clearFragment = document.importNode(templates.indexImg, true);
   render(clearFragment);
   // rootEl.classList.add('root--loading');
