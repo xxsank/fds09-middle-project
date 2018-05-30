@@ -1,4 +1,5 @@
 import axios from 'axios';
+var carousels = bulmaCarousel.attach();
 
 const postAPI = axios.create({
   baseURL: process.env.API_URL
@@ -146,7 +147,7 @@ async function topProductPage(){
   for(let i=0; i<res.data.length;i++){
     const fragment = document.importNode(templates.productList, true);
     fragment.querySelector('.product-name').textContent = res.data[i].productName;
-    fragment.querySelector('.product-price').textContent = res.data[i].price + ' won';
+    fragment.querySelector('.product-price').textContent = res.data[i].price.toLocaleString() + ' won';
     const imageEl = fragment.querySelector('.thumbnail-img')
     imageEl.setAttribute('src', res.data[i].img);
     rootEl.appendChild(fragment);
@@ -169,7 +170,7 @@ async function bottomProductPage(){
   for(let i=0; i<res.data.length;i++){
     const fragment = document.importNode(templates.productList, true);
     fragment.querySelector('.product-name').textContent = res.data[i].productName;
-    fragment.querySelector('.product-price').textContent = res.data[i].price + ' won';
+    fragment.querySelector('.product-price').textContent = res.data[i].price.toLocaleString() + ' won';
     const imageEl = fragment.querySelector('.thumbnail-img')
     imageEl.setAttribute('src', res.data[i].img);
     rootEl.appendChild(fragment);
@@ -192,7 +193,7 @@ async function shoesProductPage(){
   for(let i=0; i<res.data.length;i++){
     const fragment = document.importNode(templates.productList, true);
     fragment.querySelector('.product-name').textContent = res.data[i].productName;
-    fragment.querySelector('.product-price').textContent = res.data[i].price + ' won';
+    fragment.querySelector('.product-price').textContent = res.data[i].price.toLocaleString() + ' won';
     const imageEl = fragment.querySelector('.thumbnail-img');
     imageEl.setAttribute('src', res.data[i].img);
     rootEl.appendChild(fragment);
@@ -203,13 +204,14 @@ async function shoesProductPage(){
   }
 }
 
+// 상품 상세 정보 페이지 
  async function productItemPage(productTag,productId){
    const res = await postAPI.get(`/${productTag}/${productId}`)
    const fragment = document.importNode(templates.productItem, true);
    const itemImgEl = fragment.querySelector('.product-item__img');
    itemImgEl.setAttribute('src', res.data.img);
    fragment.querySelector('.product-item__name').textContent = res.data.productName;
-   fragment.querySelector('.product-item__price').textContent = res.data.price + ' won';
+   fragment.querySelector('.product-item__price').textContent = res.data.price.toLocaleString() + ' won';
    fragment.querySelector('.product-item__detail').textContent = res.data.productDetail;
    fragment.querySelector('.list-item1').textContent = res.data.productInfo1;
    fragment.querySelector('.list-item2').textContent = res.data.productInfo2;

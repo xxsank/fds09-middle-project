@@ -5,12 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>중간 프로젝트 템플릿</title>
+  <link rel="stylesheet" href="https://unpkg.com/bulma-carousel@2.0.14/dist/bulma-carousel.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
   <link rel="stylesheet" href="./index.scss">
 </head>
 <body>
   <!-- 배경 이미지 고정 -->
-<div class="background-img"></div>
+<div class="background-img">
+    <section class="hero is-medium has-carousel">
+        <div class="hero-carousel carousel carousel-animated carousel-animate-slide" data-autoplay="true">
+          <div class='carousel-container'>
+            <div class='carousel-item has-background is-active'>
+              <img class="is-background " src="https://cdn.glitch.com/88c9df30-262d-4457-acb7-349a73ae1b9f%2FindexImg.jpg?1527519517712" alt="" />
+            </div>
+            <div class='carousel-item has-background'>
+              <img class="is-background " src="https://cdn.glitch.com/88c9df30-262d-4457-acb7-349a73ae1b9f%2FindexImg2.jpg?1527663727427" alt="" />
+            </div>
+            <div class='carousel-item has-background'>
+              <img class="is-background " src="https://cdn.glitch.com/88c9df30-262d-4457-acb7-349a73ae1b9f%2FindexImg3.jpg?1527663734666" alt="" />
+            </div>
+            <div class='carousel-item has-background'>
+              <img class="is-background " src="https://cdn.glitch.com/88c9df30-262d-4457-acb7-349a73ae1b9f%2Findeximg4.jpg?1527663736613" alt="" />
+            </div>
+            <div class='carousel-item has-background'>
+              <img class="is-background " src="https://cdn.glitch.com/88c9df30-262d-4457-acb7-349a73ae1b9f%2FindexImg5.jpg?1527663736709" alt="" />
+            </div>
+          </div>
+        </div>
+        <div class="container"></div>
+    </section>
+</div>
 
 <!-- 헤더 상단바 부분 -->
 <header class="main-header">
@@ -27,7 +51,7 @@
 </header>
 
 <!-- 메뉴와 content영역  -->
-<div class="container">
+<div class="menu-root__container">
     <aside class="menu">
         <p class="menu-label">
           Product
@@ -107,7 +131,7 @@
           </div>
           <div class="message-body product-item__detail"></div>
         </article>
-        <article class="message is-dark">
+        <article class="message is-dark product-article">
           <div class="message-header">
             <p>상세 정보</p>
           </div>
@@ -121,8 +145,8 @@
             </ul>
           </div>                   
         </article>
-        <button type="submit" class="button is-dark">ADD TO BAG</button>
-        <button type="submit" class="button is-dark">ADD TO WISH LIST</button>                            
+        <button type="submit" class="button is-dark">BUY IT NOW</button>
+        <button type="submit" class="button is-dark">ADD TO CART</button>                            
       </div>
     </div>
   </div>
@@ -132,7 +156,7 @@
 <!-- <footer class="main-footer">
 adf
 </footer> -->
-
+  <script src="https://unpkg.com/bulma-carousel@2.0.14/dist/bulma-carousel.min.js"></script>
   <script src="./index.js"></script>
 </body>
 </html>
