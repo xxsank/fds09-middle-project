@@ -233,6 +233,7 @@ async function shoesProductPage(){
 
    
    render(fragment);
+
      itemCartBtnEl.addEventListener('click', async e=>{
       e.preventDefault();
       const payload = {
@@ -264,9 +265,8 @@ async function shoesProductPage(){
    }
    
    render(fragment);
+
  }
-
-
 
 //indexPage start
 indexPage();
