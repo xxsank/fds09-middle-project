@@ -171,6 +171,16 @@ async function topProductPage(){
     imageEl.setAttribute('src', res.data[i].img);
     rootEl.appendChild(fragment);
 
+    //마우스를 호버했을때 나타나는 이미지 체인지
+    imageEl.addEventListener('mouseover', e=>{
+      imageEl.setAttribute('src', res.data[i].hoverImg)
+    })
+
+    imageEl.addEventListener('mouseout', e=>{
+      imageEl.setAttribute('src', res.data[i].img);
+    })
+
+
     imageEl.addEventListener('click', e=> {
       productItemPage('topProducts',res.data[i].id);
     })
@@ -195,6 +205,16 @@ async function bottomProductPage(){
     imageEl.setAttribute('src', res.data[i].img);
     rootEl.appendChild(fragment);
 
+    //마우스를 호버했을때 나타나는 이미지 체인지
+    imageEl.addEventListener('mouseover', e=>{
+      imageEl.setAttribute('src', res.data[i].hoverImg)
+    })
+
+    imageEl.addEventListener('mouseout', e=>{
+      imageEl.setAttribute('src', res.data[i].img);
+    })
+
+
     imageEl.addEventListener('click', e=> {
       productItemPage('bottomProducts',res.data[i].id);
     })
@@ -218,6 +238,15 @@ async function shoesProductPage(){
     const imageEl = fragment.querySelector('.thumbnail-img');
     imageEl.setAttribute('src', res.data[i].img);
     rootEl.appendChild(fragment);
+
+    //마우스를 호버했을때 나타나는 이미지 체인지
+    imageEl.addEventListener('mouseover', e=>{
+      imageEl.setAttribute('src', res.data[i].hoverImg)
+    })
+
+    imageEl.addEventListener('mouseout', e=>{
+      imageEl.setAttribute('src', res.data[i].img);
+    })
 
     imageEl.addEventListener('click', e=> {
       productItemPage('shoesProducts',res.data[i].id);
