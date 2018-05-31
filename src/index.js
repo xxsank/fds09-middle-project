@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { DEFAULT_ECDH_CURVE } from 'tls';
+import { tmpdir } from 'os';
 var carousels = bulmaCarousel.attach();
 
 const postAPI = axios.create({
@@ -20,6 +22,12 @@ const shoesBtnEl = document.querySelector('.shoes-list__btn');
 const bgReverseEl = document.querySelector('.background-img');
 const menuReverseEl = document.querySelector('.menu');
 const headerReverseEl = document.querySelector('.main-header');
+
+//************************************ test1
+// const testEl = document.querySelectorAll('.tbody-cart__info');
+
+
+
 
 const templates = {
   login: document.querySelector('#login').content,
@@ -284,6 +292,7 @@ async function shoesProductPage(){
       const cartRes = await postAPI.post(`/cart`, payload);
       alert('장바구니에 담겼습니다');
      })
+
  } 
 
  //장바구니 페이지 완성
@@ -292,21 +301,55 @@ async function shoesProductPage(){
    const parentCartBodyEl = fragment.querySelector('.tbody-cart');
 
    const res = await postAPI.get('/cart')
+
    for(let i = 0; i<res.data.length; i++){
      const bodyCartFragment = document.importNode(templates.cartBody, true);
      const imageEl = bodyCartFragment.querySelector('.cart-body-img');
      imageEl.setAttribute('src', res.data[i].img);
+     bodyCartFragment.querySelector('.tbody-cart__info').setAttribute('value',res.data[i].id);     
      bodyCartFragment.querySelector('.td--info').textContent = res.data[i].productName;
      bodyCartFragment.querySelector('.td--price').textContent = res.data[i].price.toLocaleString() + ' won';
      bodyCartFragment.querySelector('.td--quantity').textContent = 1;
      bodyCartFragment.querySelector('.td--total').textContent = res.data[i].price.toLocaleString() + ' won';
 
-     parentCartBodyEl.appendChild(bodyCartFragment);
-   }
-   
-   render(fragment);
+     parentCartBodyEl.appendChild(bodyCartFragment);  
+    }
 
+    // for(let i = 0; i<res.data.length; i++){
+    //   const deleteFrag = fragment.querySelector('.tbody-cart__info');
+      
+    //   if(deleteFrag === res.data[i].id){
+    //     const cartDeleteBtn = fragment.querySelector('.cart-body__delete_btn')
+    //     cartDeleteBtn.addEventListener('click', async e=> {
+    //       e.preventDefault(); 
+    //       const deleteRes = await postAPI.delete(`/cart/${res.data[i].id}`);
+    //       cartPage();
+    //     })
+    //   }
+    // }
+
+    render(fragment);   
+    
+    const deleteInfoEl = document.querySelectorAll('.tbody-cart__info');
+    const cartDeleteBtn = document.querySelectorAll('.cart-body__delete_btn');
+    const deleteRes = await postAPI.get('/cart');
+    
+    for(let i = 0; i < deleteInfoEl.length; i++){
+      if(parseInt(deleteInfoEl[i].getAttribute('value')) === deleteRes.data[i].id){
+        cartDeleteBtn[i].addEventListener('click', async e=> {
+          e.preventDefault();
+          const removeRes = await postAPI.delete(`/cart/${deleteRes.data[i].id}`);
+          cartPage();
+        })
+      }
+    }
  }
 
+
+
+
+if(localStorage.getItem('token')){
+  login(localStorage.getItem('token'));
+}
 //indexPage start
 indexPage();

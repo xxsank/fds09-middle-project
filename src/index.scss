@@ -177,8 +177,9 @@ body {
 }
 
 // 장바구니 페이지
+// 장바구니 헤드
 .table-head{
-  .th--img, .th--price, .th--quantity, .th--total{
+  .th--img, .th--price, .th--quantity, .th--total, .th--check{
     text-align: center;
     width: 150px;
   }
@@ -190,11 +191,17 @@ body {
 }
 
 // 장바구니 디자인
+// 장바구니 바디
 .td{
-  &--info, &--price, &--quantity, &--total,&--checkbox{
+  &--info, &--price, &--quantity, &--total{
     line-height: 140px;
     text-align: center;
   }
+}
+
+.cart-body__delete_btn{
+  margin-top: 50%;
+  margin-left: 25px;
 }
 
 // 장바구니 디자인

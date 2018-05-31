@@ -159,8 +159,8 @@
     <table class="table">
       <thead class="table-head">
         <tr>
+          <th class="th--check">삭제</th>
           <th class="th--img">이미지</th>
-          <th><input type="checkbox"></th>
           <th class="th--info">상품 정보</th>
           <th class="th--price">판매가</th>
           <th class="th--quantity">수량</th>
@@ -172,7 +172,7 @@
           <th></th>
           <th></th>
           <th></th>
-          <th><button class="button">DELETE</button></th>          
+          <th></th>          
           <th><button class="button">CONTINUE</button></th>
           <th><button class="button">ORDER</button></th>
         </tr>
@@ -187,8 +187,8 @@
 <!-- 장바구니 바디 템플릿 -->
 <template id="cart-body">
   <tr class="tbody-cart__info">
+   <td class="td--check"><button class="button cart-body__delete_btn">삭제</button></td>          
    <td class="td--image"><img class="cart-body-img is-24x24"></td>
-   <td class="td--checkbox"><input type="checkbox"></td>          
    <td class="td--info"></td>
    <td class="td--price"></td>
    <td class="td--quantity"></td>
