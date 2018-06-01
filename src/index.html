@@ -71,6 +71,7 @@
 <!-- 로그인 폼 템플릿 -->
 <template id="login">
   <div class="box formbox">
+    <h1 class="title is-1">LOGIN</h1>    
     <div class="login">
       <form class="login__form">
         <label class="label">Username</label>
@@ -87,13 +88,22 @@
 
 <!-- 회원가입 폼 템플릿 -->
 <template id="signup">
-  <div class="box formbox">
+  <div class="box signup-formbox">
+    <h1 class="title is-1">SIGN UP</h1>
     <div class="signup">
       <form class="signup__form">
         <label class="label">Username</label>
         <input name="username" type="text" class="signup__username input">
         <label class="label">Password</label>
         <input name="password" type="password" class="signup__password input">
+        <label class="label">Name</label>
+        <input name="name" type="name" class="signup__name input">
+        <label class="label">Adress</label>
+        <input name="address" type="address" class="signup__adress input">
+        <label class="label">Phone</label>
+        <input name="phone" type="phone" class="signup__phone input">
+        <label class="label">Mail</label>
+        <input name="mail" type="mail" class="signup__mail input">
         <div class="control">
           <button type="submit" class="button">SIGN UP</button>
         </div>
@@ -174,7 +184,7 @@
           <th></th>
           <th></th>          
           <th><button class="button">CONTINUE</button></th>
-          <th><button class="button">ORDER</button></th>
+          <th><button class="button cart-order__btn">ORDER</button></th>
         </tr>
       </tfoot>
       <tbody class="tbody-cart">
@@ -195,6 +205,48 @@
    <td class="td--total"></td>
   </tr>
 </template>
+
+<!-- 주문페이지 템플릿 -->
+<template id="order-list">
+    <div class="box order-box">
+      <h1 class="title is-1">ORDER</h1>
+      <table class="table">
+        <thead class="table-head">
+          <tr>
+            <th class="th--img">이미지</th>
+            <th class="th--info">상품 정보</th>
+            <th class="th--price">판매가</th>
+            <th class="th--quantity">수량</th>
+            <th class="th--total">합계</th>
+          </tr>
+        </thead>
+        <tfoot class="order-foot">
+          <tr>
+            <th></th>
+            <th></th>
+            <th></th>          
+            <th class="order-head">합계</th>
+            <th class="order-total"></th>
+          </tr>
+        </tfoot>
+        <tbody class="tbody-order">
+  
+        </tbody>
+      </table>
+    </div>  
+</template>
+
+<!-- 주문페이지 바디 템플릿 -->
+<template id="order-body">
+    <tr>
+     <td class="td--image"><img class="cart-body-img is-24x24"></td>
+     <td class="td--info"></td>
+     <td class="td--price"></td>
+     <td class="td--quantity"></td>
+     <td class="td--total"></td>
+    </tr>
+  </template>
+
 
 <!-- 하단부 -->
 <!-- <footer class="main-footer">

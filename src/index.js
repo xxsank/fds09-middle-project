@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { DEFAULT_ECDH_CURVE } from 'tls';
-import { tmpdir } from 'os';
+// import { DEFAULT_ECDH_CURVE } from 'tls';
+// import { tmpdir } from 'os';
 var carousels = bulmaCarousel.attach();
 
 const postAPI = axios.create({
@@ -14,6 +14,7 @@ const loginBtnEl = document.querySelector('.menu__login-btn');
 const logoutBtnEl = document.querySelector('.menu__logout-btn');
 const signupBtnEl = document.querySelector('.menu__signup-btn');
 const cartBtnEl = document.querySelector('.menu__cart-btn');
+const orderBtnEl = document.querySelector('.menu__order-btn');
 
 const topBtnEl = document.querySelector('.top-list__btn');
 const bottomBtnEl = document.querySelector('.bottom-list__btn');
@@ -36,7 +37,9 @@ const templates = {
   productList: document.querySelector('#product-list').content,
   productItem: document.querySelector('#product-item').content,
   cartList: document.querySelector('#product-cart').content,
-  cartBody: document.querySelector('#cart-body').content
+  cartBody: document.querySelector('#cart-body').content,
+  orderList: document.querySelector('#order-list').content,
+  orderBody: document.querySelector('#order-body').content
 }
 
 //로그인 함수
@@ -98,6 +101,11 @@ async function indexPage(){
     render(fragment);
     cartPage();
   })
+
+  orderBtnEl.addEventListener('click', e => {
+    render(fragment);     
+    orderPage();
+  })
   
   topBtnEl.addEventListener('click', e=> {
     render(fragment);
@@ -147,10 +155,23 @@ async function signUpPage(){
   formEl.addEventListener('submit', async e=>{
     const payload = {
       username: e.target.elements.username.value,
-      password: e.target.elements.password.value
+      password: e.target.elements.password.value     
     };
+
+    const payloadInfo = {
+      name: e.target.elements.name.value,
+      address: e.target.elements.address.value,
+      phone: e.target.elements.phone.value,
+      mail:  e.target.elements.mail.value,    
+    };
+
     e.preventDefault();
     const res = await postAPI.post('/users/register',payload);
+    login(res.data.token);
+    const meRes = await postAPI.get(`/me`);
+    const id = meRes.data.id;
+    const addInfoRes = await postAPI.patch(`/users/${id}`,payloadInfo);
+    logout();
     alert('회원가입이 완료 되었습니다.');
     bgReverseEl.classList.remove('reverse');
     menuReverseEl.classList.remove('reverse');
@@ -284,12 +305,14 @@ async function shoesProductPage(){
 
      itemCartBtnEl.addEventListener('click', async e=>{
       e.preventDefault();
+      const meRes = await postAPI.get(`/me`);
       const payload = {
         img: res.data.img,
         productName: res.data.productName,
-        price: res.data.price
+        price: res.data.price,
+        userId: meRes.data.id
       }
-      const cartRes = await postAPI.post(`/cart`, payload);
+      const cartRes = await postAPI.post(`/carts`, payload);
       alert('장바구니에 담겼습니다');
      })
 
@@ -300,7 +323,7 @@ async function shoesProductPage(){
    const fragment = document.importNode(templates.cartList, true);
    const parentCartBodyEl = fragment.querySelector('.tbody-cart');
 
-   const res = await postAPI.get('/cart')
+   const res = await postAPI.get('/carts')
 
    for(let i = 0; i<res.data.length; i++){
      const bodyCartFragment = document.importNode(templates.cartBody, true);
@@ -320,18 +343,45 @@ async function shoesProductPage(){
     // 장바구니 페이지에서 삭제 버튼 클릭시 db에서도삭제 화면에서도 바로 렌더링 시켜주는 로직.
     const deleteInfoEl = document.querySelectorAll('.tbody-cart__info');
     const cartDeleteBtn = document.querySelectorAll('.cart-body__delete_btn');
-    const deleteRes = await postAPI.get('/cart');
+    const deleteRes = await postAPI.get('/carts');
     
     for(let i = 0; i < deleteInfoEl.length; i++){
       if(parseInt(deleteInfoEl[i].getAttribute('value')) === deleteRes.data[i].id){
         cartDeleteBtn[i].addEventListener('click', async e=> {
           e.preventDefault();
-          const removeRes = await postAPI.delete(`/cart/${deleteRes.data[i].id}`);
+          const removeRes = await postAPI.delete(`/carts/${deleteRes.data[i].id}`);
           cartPage();
         })
       }
     }
+    const orderBtn = document.querySelector('.cart-order__btn');
+    orderBtn.addEventListener('click',  e=>{
+      orderPage();
+    })  
  }
+
+ async function orderPage(){
+   const fragment = document.importNode(templates.orderList, true);
+   const parentOrderBodyEl = fragment.querySelector('.tbody-order');
+   let priceTotal = 0;
+   const res = await postAPI.get('/carts');
+
+
+   for(let i = 0; i<res.data.length; i++){
+    const bodyOrderFragment = document.importNode(templates.orderBody, true);
+    const imageEl = bodyOrderFragment.querySelector('.cart-body-img');
+    imageEl.setAttribute('src', res.data[i].img);
+    bodyOrderFragment.querySelector('.td--info').textContent = res.data[i].productName;
+    bodyOrderFragment.querySelector('.td--price').textContent = res.data[i].price.toLocaleString() + ' won';
+    bodyOrderFragment.querySelector('.td--quantity').textContent = 1;
+    bodyOrderFragment.querySelector('.td--total').textContent = res.data[i].price.toLocaleString() + ' won';
+    priceTotal += res.data[i].price
+    parentOrderBodyEl.appendChild(bodyOrderFragment);  
+   }
+   fragment.querySelector('.order-total').textContent = priceTotal.toLocaleString() + ' won';
+   render(fragment); 
+ }
+
 
 
 
