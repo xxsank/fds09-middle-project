@@ -152,6 +152,7 @@ async function loginPage(){
 async function signUpPage(){
   const fragment = document.importNode(templates.signup, true);
   const formEl = fragment.querySelector('.signup__form');
+
   formEl.addEventListener('submit', async e=>{
     const payload = {
       username: e.target.elements.username.value,
@@ -171,7 +172,7 @@ async function signUpPage(){
     const meRes = await postAPI.get(`/me`);
     const id = meRes.data.id;
     const addInfoRes = await postAPI.patch(`/users/${id}`,payloadInfo);
-    logout();
+    // logout();
     alert('회원가입이 완료 되었습니다.');
     bgReverseEl.classList.remove('reverse');
     menuReverseEl.classList.remove('reverse');
@@ -179,6 +180,8 @@ async function signUpPage(){
     const clearFragment = document.importNode(templates.indexImg, true);
     render(clearFragment);
   })
+
+
   render(fragment);
 }
 
