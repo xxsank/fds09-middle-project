@@ -315,21 +315,9 @@ async function shoesProductPage(){
      parentCartBodyEl.appendChild(bodyCartFragment);  
     }
 
-    // for(let i = 0; i<res.data.length; i++){
-    //   const deleteFrag = fragment.querySelector('.tbody-cart__info');
-      
-    //   if(deleteFrag === res.data[i].id){
-    //     const cartDeleteBtn = fragment.querySelector('.cart-body__delete_btn')
-    //     cartDeleteBtn.addEventListener('click', async e=> {
-    //       e.preventDefault(); 
-    //       const deleteRes = await postAPI.delete(`/cart/${res.data[i].id}`);
-    //       cartPage();
-    //     })
-    //   }
-    // }
-
     render(fragment);   
     
+    // 장바구니 페이지에서 삭제 버튼 클릭시 db에서도삭제 화면에서도 바로 렌더링 시켜주는 로직.
     const deleteInfoEl = document.querySelectorAll('.tbody-cart__info');
     const cartDeleteBtn = document.querySelectorAll('.cart-body__delete_btn');
     const deleteRes = await postAPI.get('/cart');
