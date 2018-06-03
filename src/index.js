@@ -27,9 +27,6 @@ const headerReverseEl = document.querySelector('.main-header');
 //************************************ test1
 // const testEl = document.querySelectorAll('.tbody-cart__info');
 
-
-
-
 const templates = {
   login: document.querySelector('#login').content,
   signup: document.querySelector('#signup').content,
@@ -169,10 +166,12 @@ async function signUpPage(){
     e.preventDefault();
     const res = await postAPI.post('/users/register',payload);
     login(res.data.token);
+
     const meRes = await postAPI.get(`/me`);
     const id = meRes.data.id;
+    
     const addInfoRes = await postAPI.patch(`/users/${id}`,payloadInfo);
-    // logout();
+    logout();
     alert('회원가입이 완료 되었습니다.');
     bgReverseEl.classList.remove('reverse');
     menuReverseEl.classList.remove('reverse');
